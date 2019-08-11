@@ -95,8 +95,17 @@ class Kind(Directory):
                 json_info = []
             json_info.append(new_data)
 
+        # learn from another fork: remove old project information   
+        projects = json_info[:]
+        for i in range(len(projects)):
+            if projects[i]['root'] == project_root and projects[i]['name'] == project_name:
+                projects.pop(i)
+                break
+
+        projects.append(new_data)
+
         with open(data_file, 'w') as f:
-            json.dump(json_info, f, indent=2)
+            json.dump(projects, f, indent=4)
 
     def action_delete(self, context):
         """Remove a project from *projects.json*."""
@@ -119,6 +128,7 @@ class Kind(Directory):
                 with open(data_file, 'w') as f:
                     json.dump(projects, f, indent=2)
 
+
     def action_custom(self, context):
         """Execute a custom action defined by ``g:projectile#directory_command``."""
         target   = context['targets'][0]
@@ -127,5 +137,7 @@ class Kind(Directory):
             return
         destination = expand(target['action__path'])
         self.vim.call('execute', '{} {}'.format(user_cmd, destination))
+
+
 
 
