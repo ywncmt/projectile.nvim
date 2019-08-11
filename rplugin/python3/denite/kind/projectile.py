@@ -133,4 +133,15 @@ class Kind(Directory):
         self.vim.call('execute', '{} {}'.format(user_cmd, destination))
 
 
+    def action_open(self, context):
+        '''
+            Activate FZF when open.
+        '''
+        target = context['targets'][0]
+        if not isdir(target['action__path']):
+            return
+        self.vim.command('cd {}'.format(target['action__path']))
+        self.vim.command('FZF')
+        
+
 
