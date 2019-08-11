@@ -81,8 +81,8 @@ class Source(Base):
                     'timestamp':    obj['timestamp'],
                     # 'git_branch':   self._get_branch(obj['root']),
                     # 'git_stats':    self._get_stats(obj['root']),
-                    'git_stats':    '▶',
-                    'git_branch':   '▶',
+                    'git_stats':    '▶',  
+                    'git_branch':   'Ξ',  
                     'short_root':   obj['root'].replace(expanduser('~'), '~'),
                 })
 
