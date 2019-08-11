@@ -44,3 +44,6 @@ class Projectile(object):
                 projects.append(new_data)
                 with open(data_file, 'w') as f:
                     json.dump(projects, f, indent=2)
+
+                print('New project' + pj_name + 'added.')
+
