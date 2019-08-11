@@ -8,16 +8,10 @@
 
 import json
 import datetime
-import sys
-import platform
 import re
 import os
 from os.path import abspath, join, dirname, basename, expanduser, exists
-import json
-import shutil
-from glob import glob
 from os.path import isdir, normpath, abspath
-from pathlib import Path
 
 from ..kind.directory import Kind as Directory
 from denite.util import expand, input, path2project
