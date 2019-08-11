@@ -8,11 +8,43 @@
 
 import json
 import datetime
-from os.path import basename, isdir, normpath
+import sys
+import platform
+import re
+import os
+from os.path import abspath, join, dirname, basename, expanduser, exists
+import json
+import shutil
+from glob import glob
+from os.path import isdir, normpath, abspath
+from pathlib import Path
 
 from ..kind.directory import Kind as Directory
 from denite.util import expand, input, path2project
 
+MAX_DEPTH = 20
+
+def neopath2project(filepath, roots=['.git', '.projectile'], nearest=True):
+    DEPTH = 0
+
+    folderpath = abspath(dirname(filepath))
+    curfolder = folderpath
+
+    FOUND = False
+
+    while DEPTH < MAX_DEPTH:
+        FOUND = FOUND or ( 
+            any(map(lambda x: exists(join(curfolder, x)), roots))
+        )
+
+        if FOUND:
+            return curfolder
+        else:
+            DEPTH += 1
+            curfolder = abspath(join(curfolder, '..'))
+
+    return folderpath
+    
 
 class Kind(Directory):
     """Kind using JSON to persist data for projects."""
@@ -36,7 +68,7 @@ class Kind(Directory):
         data_file = expand(self.vars['data_dir'] + '/projects.json')
         root_dir  = self.vim.call('getcwd')
         boofer    = self.vim.current.buffer.name
-        pj_root   = path2project(self.vim, boofer, ['.git', '.svn', '.hg'])
+        pj_root   = neopath2project(boofer, ['.git', '.svn', '.hg', '.projectile'])
         pj_name   = basename(normpath(pj_root))
         new_data  = {}
 
