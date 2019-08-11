@@ -79,8 +79,10 @@ class Source(Base):
                     'name':         obj['name'],
                     'is_vcs':       obj['vcs'],
                     'timestamp':    obj['timestamp'],
-                    'git_branch':   self._get_branch(obj['root']),
-                    'git_stats':    self._get_stats(obj['root']),
+                    # 'git_branch':   self._get_branch(obj['root']),
+                    # 'git_stats':    self._get_stats(obj['root']),
+                    'git_stats':    '?',
+                    'git_branch':   '?',
                     'short_root':   obj['root'].replace(expanduser('~'), '~'),
                 })
 
