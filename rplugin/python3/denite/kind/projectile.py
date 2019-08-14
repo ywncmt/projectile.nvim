@@ -143,5 +143,14 @@ class Kind(Directory):
         self.vim.command('cd {}'.format(target['action__path']))
         self.vim.command('FZF')
         
+    def action_jumptags(self, context):
+        '''
+            Activate Leaderf Tags when open.
+        '''
+        target = context['targets'][0]
+        if not isdir(target['action__path']):
+            return
+        self.vim.command('cd {}'.format(target['action__path']))
+        self.vim.command('Denite tag')
 
 
