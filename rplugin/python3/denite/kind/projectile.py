@@ -6,6 +6,7 @@
 #  Last Modified: 2017-12-29
 #  =============================================================================
 
+# import snake
 import json
 import datetime
 import re
@@ -141,6 +142,7 @@ class Kind(Directory):
         if not isdir(target['action__path']):
             return
         self.vim.command('cd {}'.format(target['action__path']))
+        self.vim.command('lcd {}'.format(target['action__path']))
         self.vim.command('FZF')
         
     def action_jumptags(self, context):
@@ -150,7 +152,12 @@ class Kind(Directory):
         target = context['targets'][0]
         if not isdir(target['action__path']):
             return
-        self.vim.command('cd {}'.format(target['action__path']))
-        self.vim.command('Denite tag')
+        self.vim.command('cd {}'.format(target['action__path']))  
+        self.vim.command('lcd {}'.format(target['action__path']))  
+        self.vim.command('Denite tag -path={folder}'.format(folder=target['action__path']))     
+
+
+
+
 
 
