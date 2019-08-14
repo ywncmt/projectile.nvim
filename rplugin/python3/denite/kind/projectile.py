@@ -17,9 +17,29 @@ from os.path import isdir, normpath, abspath
 from ..kind.directory import Kind as Directory
 from denite.util import expand, input, path2project
 
-MAX_DEPTH = 20
+import platform
+import sys
+import re
 
-def neopath2project(filepath, roots=['.git', '.projectile'], nearest=True):
+def get_os():
+    ''' Get the current OS
+    But the real linux and the linux in VMM will be treated as the same. '''
+    patt = re.compile(r'(.*win.*)|(.*nt.*)')
+    if patt.match(sys.platform):
+        if 'darwin' in sys.platform:
+            return 'mac'
+        return "win"
+    elif re.match(r'.*Micro.*', platform.release(), re.IGNORECASE):
+        return "wsl"
+    elif re.match(r'.*linux.*', sys.platform, re.IGNORECASE):
+        return "linux"
+    else:
+        return "mac"
+
+def IsWin():
+    return get_os() == 'win'   
+
+def neopath2project(filepath, roots=['.git', '.projectile'], nearest=True, MAX_DEPTH = 20):
     DEPTH = 0
 
     folderpath = abspath(dirname(filepath))
@@ -156,7 +176,16 @@ class Kind(Directory):
         self.vim.command('lcd {}'.format(target['action__path']))  
         self.vim.command('Denite tag -path={folder}'.format(folder=target['action__path']))     
 
-
+    def action_term(self, context):
+        '''
+            Not work   
+        '''
+        target = context['targets'][0]
+        if not isdir(target['action__path']):
+            return
+        self.vim.command('cd {}'.format(target['action__path']))  
+        self.vim.command('lcd {}'.format(target['action__path']))  
+        self.vim.command('terminal {term}'.format(term='powershell' if IsWin() else 'zsh'))        
 
 
 
