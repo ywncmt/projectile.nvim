@@ -72,7 +72,7 @@ class Source(Base):
                 config = []
 
             for obj in config:
-                self._get_pos(obj['root'])
+                # self._get_pos(obj['root'])
                 candidates.append({
                     'word':         obj['root'],
                     'action__path': obj['root'],
