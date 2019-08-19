@@ -167,7 +167,7 @@ class Kind(Directory):
         
     def action_jumptags(self, context):
         '''
-            Activate Leaderf Tags when open.
+            Activate Leaderf Tags when open, not work.
         '''
         target = context['targets'][0]
         if not isdir(target['action__path']):
@@ -187,6 +187,15 @@ class Kind(Directory):
         self.vim.command('lcd {}'.format(target['action__path']))  
         self.vim.command('terminal {term}'.format(term='powershell' if IsWin() else 'zsh'))        
 
-
+    def action_rg(self, context):
+        '''
+            Use Rg to search the whole project, depends on `fzf.vim`.
+        '''
+        target = context['targets'][0]
+        if not isdir(target['action__path']):
+            return
+        self.vim.command('cd {}'.format(target['action__path']))  
+        self.vim.command('lcd {}'.format(target['action__path']))  
+        self.vim.command('Ag')        
 
 
