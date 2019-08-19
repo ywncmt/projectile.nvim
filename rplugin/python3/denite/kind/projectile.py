@@ -1,9 +1,9 @@
 """Kind using JSON to persist data for projects."""
 #  =============================================================================
 #  FILE: projectile.py
-#  AUTHOR: Clay Dunston <dunstontc@gmail.com>
+#  AUTHOR: Clay Dunston <dunstontc@gmail.com>, Ywncmt <ywncmt@gmail.com>
 #  License: MIT
-#  Last Modified: 2017-12-29
+#  Last Modified: 2019-08-19
 #  =============================================================================
 
 # import snake
