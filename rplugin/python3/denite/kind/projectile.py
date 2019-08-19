@@ -167,14 +167,21 @@ class Kind(Directory):
         
     def action_jumptags(self, context):
         '''
-            Activate Leaderf Tags when open, not work.
+            Activate Leaderf Tags when open. 
         '''
         target = context['targets'][0]
         if not isdir(target['action__path']):
             return
         self.vim.command('cd {}'.format(target['action__path']))  
         self.vim.command('lcd {}'.format(target['action__path']))  
-        self.vim.command('Denite tag -path={folder}'.format(folder=target['action__path']))     
+        # self.vim.command('Denite tag -path={folder}'.format(folder=target['action__path']))     
+        # self.vim.command('above 10 new [TagsSearch]')
+        self.vim.command('tab new [TagsSearch]')
+        self.vim.command('setlocal buftype=nofile')   
+        self.vim.command('setlocal filetype=helper')   
+        self.vim.command('setlocal statusline=[TagsSearch]') 
+        self.vim.command('nnoremap <silent><buffer>q :bdelete!<CR>')
+        self.vim.command('LeaderfTag')
 
     def action_term(self, context):
         '''

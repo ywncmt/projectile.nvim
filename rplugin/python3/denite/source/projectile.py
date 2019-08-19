@@ -1,7 +1,7 @@
 """Denite source for project directories."""
 # ==============================================================================
 #  FILE: projectile.py
-#  AUTHOR: Clay Dunston <dunstontc@gmail.com>
+#  AUTHOR: Clay Dunston <dunstontc@gmail.com>, Ywncmt <ywncmt@gmail.com>        
 #  License: MIT License
 #  Last Modified: 2018-01-11
 # ==============================================================================
