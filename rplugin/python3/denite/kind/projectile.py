@@ -196,13 +196,19 @@ class Kind(Directory):
 
     def action_rg(self, context):
         '''
-            Use Rg to search the whole project, depends on `fzf.vim`.
+            Use Rg to search the whole project, depends on `fzf.vim`. 
         '''
         target = context['targets'][0]
         if not isdir(target['action__path']):
             return
         self.vim.command('cd {}'.format(target['action__path']))  
         self.vim.command('lcd {}'.format(target['action__path']))  
-        self.vim.command('Ag')        
+        self.vim.command('tab new [RgSearch]')    
+        self.vim.command('setlocal buftype=nofile')     
+        self.vim.command('setlocal filetype=helper')     
+        self.vim.command('setlocal statusline=[RgSearch]')    
+        self.vim.command('nnoremap <silent><buffer>q :bdelete!<CR>')      
+        self.vim.command('Rg')        
+
 
 
