@@ -203,7 +203,8 @@ class Kind(Directory):
             return
         self.vim.command('cd {}'.format(target['action__path']))  
         self.vim.command('lcd {}'.format(target['action__path']))  
-        self.vim.command('tab new [RgSearch]')    
+        # self.vim.command('tab new [RgSearch]')    
+        self.vim.command('call FloatingMini()')    
         self.vim.command('setlocal buftype=nofile')     
         self.vim.command('setlocal filetype=helper')     
         self.vim.command('setlocal statusline=[RgSearch]')    
