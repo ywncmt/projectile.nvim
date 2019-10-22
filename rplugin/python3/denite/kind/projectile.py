@@ -20,6 +20,7 @@ from denite.util import expand, input, path2project
 import platform
 import sys
 import re
+import time
 
 def get_os():
     ''' Get the current OS
@@ -201,15 +202,21 @@ class Kind(Directory):
         target = context['targets'][0]
         if not isdir(target['action__path']):
             return
+        self.vim.command('call projectile#FloatingMini()')    
+        self.vim.command('let g:proj_cur_buf = nvim_get_current_buf()')  
         self.vim.command('cd {}'.format(target['action__path']))  
         self.vim.command('lcd {}'.format(target['action__path']))  
         # self.vim.command('tab new [RgSearch]')    
-        self.vim.command('call FloatingMini()')    
-        self.vim.command('setlocal buftype=nofile')     
-        self.vim.command('setlocal filetype=helper')     
-        self.vim.command('setlocal statusline=[RgSearch]')    
+        # self.vim.command('setlocal buftype=nofile')     
+        # self.vim.command('setlocal filetype=helper')     
+        # self.vim.command('setlocal statusline=[RgSearch]')    
         self.vim.command('nnoremap <silent><buffer>q :bdelete!<CR>')      
         self.vim.command('Rg')        
+        # self.vim.command('bdelete %d' % self.vim.vars['proj_cur_buf'])   
+
+
+
+
 
 
 

@@ -42,3 +42,34 @@ endfunction
 function! projectile#CommandCompletion( base ) abort
   silent execute "normal! :" a:base . "\<C-a>')\<C-b>return split('\<CR>"
 endfunction
+
+
+function! projectile#FloatingMini() abort
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+
+  let height = 1
+  let width = 1
+  let col = float2nr((&columns - width) / 2)
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': 1,
+        \ 'col': col,
+        \ 'width': width,
+        \ 'height': height
+        \ }
+
+  call nvim_open_win(buf, v:true, opts)
+endfunction
+
+function! projectile#KillWin( winid ) abort
+    execute "bdelete! " . a:winid
+endfunction
+
+function! projectile#RgHelper( winid ) abort
+    Rg
+    call timer_start(100000, projectile#KillWin(a:winid))
+endfunction
+
+
