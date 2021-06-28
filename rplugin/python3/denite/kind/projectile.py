@@ -15,7 +15,9 @@ from os.path import abspath, join, dirname, basename, expanduser, exists
 from os.path import isdir, normpath, abspath
 
 from ..kind.directory import Kind as Directory
-from denite.util import expand, input, path2project
+
+# from denite.util import expand, input, path2project
+from denite.util import expand, path2project    # the input methods in denite no longer work
 
 import platform
 import sys
@@ -52,13 +54,11 @@ def neopath2project(filepath, roots=['.git', '.projectile'], nearest=True, MAX_D
         FOUND = FOUND or ( 
             any(map(lambda x: exists(join(curfolder, x)), roots))
         )
-
         if FOUND:
             return curfolder
         else:
             DEPTH += 1
             curfolder = abspath(join(curfolder, '..'))
-
     return folderpath
     
 
@@ -88,11 +88,18 @@ class Kind(Directory):
         pj_name   = basename(normpath(pj_root))
         new_data  = {}
 
-        project_root = input(self.vim, context, 'Project Root: ', pj_root)
+        # project_root = input(self.vim, context, 'Project Root: ', pj_root)
+
+        project_root = str(self.vim.call('denite#util#input', 'Project Root: ', pj_root, ''))    # fix the input method problem according to another pull request
+
         if not len(project_root):
             project_root = pj_root
 
-        project_name = input(self.vim, context, 'Project Name: ', pj_name)
+        # project_name = input(self.vim, context, 'Project Name: ', pj_name)
+        
+        project_name = str(self.vim.call('denite#util#input', 'Project Name: ', pj_name, ''))    # fix the input method problem according to another pull request
+ 
+        
         if not len(project_name):
             project_name = pj_name
 
